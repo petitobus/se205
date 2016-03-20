@@ -8,6 +8,7 @@
 #define MAX 8
 
 protected_buffer_t * protected_buffer;
+pthread_t consume;
 
 // Main consumer
 void main_consumer(void){
@@ -39,6 +40,8 @@ int main(int argc, char *argv[]){
 
   // Creer un thread consumer qui exécute main_consumer
 
+  pthread_create(&consume,NULL,main_consumer,NULL);
+
   printf ("producer waiting for 5s\n");
   sleep (5);
   printf ("produce %d elements\n", 2 * MAX);
@@ -50,6 +53,7 @@ int main(int argc, char *argv[]){
     printf ("produce [%d]\n", i);
   }
   
+  pthread_join(consume,NULL);
   // Attendre la terminaison de consumer
 
   return 0;

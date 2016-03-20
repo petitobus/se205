@@ -163,7 +163,8 @@ protected_buffer.o: protected_buffer.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/select.h \
  /usr/include/x86_64-linux-gnu/bits/sigset.h \
  /usr/include/x86_64-linux-gnu/sys/sysmacros.h /usr/include/alloca.h \
- /usr/include/x86_64-linux-gnu/bits/stdlib-float.h circular_buffer.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+ /usr/include/x86_64-linux-gnu/sys/time.h circular_buffer.h \
  protected_buffer.h
 protected_buffer.o: protected_buffer.h /usr/include/stdc-predef.h \
  /usr/include/pthread.h /usr/include/features.h \
@@ -245,7 +246,8 @@ protected_buffer.o: protected_buffer.c /usr/include/stdc-predef.h \
  /usr/include/x86_64-linux-gnu/bits/select.h \
  /usr/include/x86_64-linux-gnu/bits/sigset.h \
  /usr/include/x86_64-linux-gnu/sys/sysmacros.h /usr/include/alloca.h \
- /usr/include/x86_64-linux-gnu/bits/stdlib-float.h circular_buffer.h \
+ /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
+ /usr/include/x86_64-linux-gnu/sys/time.h circular_buffer.h \
  protected_buffer.h
 protected_buffer.o: protected_buffer.h /usr/include/stdc-predef.h \
  /usr/include/pthread.h /usr/include/features.h \
