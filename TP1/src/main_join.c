@@ -24,7 +24,7 @@ void process_exit() {
 
 // Find a terminated child process and return its tid
 pthread_t process_wait() {
-    pthread_t thread = NULL;
+  pthread_t thread = NULL;
   if (first_thread <= last_thread) {
     thread = threads_table[first_thread];
     first_thread++;
@@ -57,18 +57,20 @@ int main(int argc, char *argv[]){
   // Creer autant de threads que demandé en ligne de commande
   int n;
   for (n = 0; n <= last_thread; n++) {
+     usleep(1000);
      pthread_create(&threads_table[n],NULL,thread_main,NULL);
   }
 
   // Attendre la terminaison des threads dans un certain ordre
-  int conter = last_thread;
-  while(conter != -1){
+  int counter = last_thread;
+  while(counter >= 0){
  	 pthread_mutex_lock(&mtx);
  	 pthread_cond_wait(&cond,&mtx);
-	 conter--;
+	 counter--;
+     printf("rest %d threads\n",counter);
  	 pthread_mutex_unlock(&mtx);
   }
-    printf("all threads finish");
+    printf("all threads finish\n");
  /* 
   pthread_t thread;
   while ((thread = process_wait()) != NULL) {
