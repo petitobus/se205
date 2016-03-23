@@ -10,15 +10,10 @@
 int last_thread = -1;
 int first_thread = 0;
 pthread_t threads_table[MAXTHREADS];
-struct timeval s = {0, 0};
-pthread_cond_t cond;
-pthread_mutex_t mtx;
+protected_buffer_t* finished_threads;
 // Terminate thread
 void process_exit() {
-  struct timeval t;
-  gettimeofday(&t, NULL);
-  printf("thread (%x) join after %d s\n", pthread_self(), (int)(t.tv_sec -s.tv_sec));
-  pthread_cond_broadcast(&cond);
+  protected_buffer_put(finished_threads,(void *)pthread_self());
   pthread_exit(NULL);
 }
 
@@ -47,8 +42,10 @@ int main(int argc, char *argv[]){
     printf("Usage : %s <n_threads>\n", argv[0]);
     exit(1);
   } 
-  pthread_cond_init(&cond,NULL);
-  pthread_mutex_init(&mtx,NULL);
+  struct timeval s = {0, 0};
+  struct timeval t;
+  
+  finished_threads = protected_buffer_init(MAXTHREADS);
   srandom(time(NULL));
   gettimeofday(&s, NULL);
   last_thread = atoi(argv[1]) - 1;
@@ -63,12 +60,13 @@ int main(int argc, char *argv[]){
 
   // Attendre la terminaison des threads dans un certain ordre
   int counter = last_thread;
+  pthread_t thread;
   while(counter >= 0){
- 	 pthread_mutex_lock(&mtx);
- 	 pthread_cond_wait(&cond,&mtx);
-	 counter--;
+     thread = protected_buffer_get(finished_threads); 
+     gettimeofday(&t, NULL);
+     printf("thread (%p) join after %d s\n", (void *)thread, (int)(t.tv_sec -s.tv_sec));
+ 	 counter--;
      printf("rest %d threads\n",counter);
- 	 pthread_mutex_unlock(&mtx);
   }
     printf("all threads finish\n");
  /* 
