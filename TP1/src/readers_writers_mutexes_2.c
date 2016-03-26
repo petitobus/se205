@@ -23,7 +23,7 @@ void rw_mutex_init (rw_mutex_t * rw_mutex, int n_threads){
 void rw_mutex_read_lock (rw_mutex_t *rw_mutex, thread_conf_t *conf){
   pthread_mutex_lock(&(rw_mutex->mutex));
   while(rw_mutex->owner == WRITER){
-    if(circular_buffer_read(rw_mutex->queue)==WRITER){
+    if(circular_buffer_size(rw_mutex->queue)!=0){
         printf("some writer is in waiting queue\n");
         pthread_cond_wait(&(rw_mutex->guard),&(rw_mutex->mutex));
     }
@@ -67,5 +67,4 @@ void rw_mutex_writer_lock (rw_mutex_t *rw_mutex, thread_conf_t * conf){
 
 void rw_mutex_writer_unlock (rw_mutex_t *rw_mutex, thread_conf_t * conf){
   rw_mutex->owner = UNUSED;
-  usleep(1000);
 }
