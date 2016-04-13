@@ -44,6 +44,7 @@ class BarrierMain {
         Barrier ActivatedThreads = new Barrier();
         Barrier CompletedThreads = new Barrier();
         // Initialize synchronization structures
+        ActivatedWorkers.Initialize(-1); 
         ActivatedThreads.Initialize(nWorkers+1);
         CompletedThreads.Initialize(nWorkers+1);
         // Create and start Master
